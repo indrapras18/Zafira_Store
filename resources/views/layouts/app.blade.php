@@ -1,33 +1,35 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Dashboard - {{ config('app.name', 'Enchen App') }}</title>
-    
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
+
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Poppins', sans-serif;
             background: #f8f9fa;
             color: #333;
         }
-        
+
         .sidebar {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
@@ -38,16 +40,16 @@
             z-index: 1000;
             transition: transform 0.3s ease;
         }
-        
+
         .sidebar.collapsed {
             transform: translateX(-100%);
         }
-        
+
         .sidebar-header {
             padding: 20px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
-        
+
         .sidebar-brand {
             color: white;
             text-decoration: none;
@@ -56,19 +58,19 @@
             display: flex;
             align-items: center;
         }
-        
+
         .sidebar-brand:hover {
             color: white;
         }
-        
+
         .sidebar-menu {
             padding: 20px 0;
         }
-        
+
         .menu-item {
             margin-bottom: 5px;
         }
-        
+
         .menu-link {
             display: flex;
             align-items: center;
@@ -78,30 +80,30 @@
             transition: all 0.3s ease;
             border-left: 4px solid transparent;
         }
-        
+
         .menu-link:hover,
         .menu-link.active {
             background: rgba(255, 255, 255, 0.1);
             color: white;
             border-left-color: white;
         }
-        
+
         .menu-icon {
             width: 20px;
             margin-right: 15px;
             text-align: center;
         }
-        
+
         .main-content {
             margin-left: 250px;
             min-height: 100vh;
             transition: margin-left 0.3s ease;
         }
-        
+
         .main-content.expanded {
             margin-left: 0;
         }
-        
+
         .top-navbar {
             background: white;
             padding: 15px 30px;
@@ -110,12 +112,12 @@
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .navbar-left {
             display: flex;
             align-items: center;
         }
-        
+
         .sidebar-toggle {
             background: none;
             border: none;
@@ -124,17 +126,17 @@
             margin-right: 20px;
             cursor: pointer;
         }
-        
+
         .navbar-right {
             display: flex;
             align-items: center;
             margin-left: auto;
         }
-        
+
         .user-dropdown {
             position: relative;
         }
-        
+
         .user-avatar {
             width: 40px;
             height: 40px;
@@ -147,34 +149,34 @@
             font-weight: 600;
             cursor: pointer;
         }
-        
+
         .dashboard-content {
             padding: 30px;
         }
-        
+
         .dashboard-header {
             margin-bottom: 30px;
         }
-        
+
         .dashboard-title {
             font-size: 2rem;
             font-weight: 600;
             color: #333;
             margin-bottom: 10px;
         }
-        
+
         .dashboard-subtitle {
             color: #666;
             font-size: 1.1rem;
         }
-        
+
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
         }
-        
+
         .stat-card {
             background: white;
             padding: 25px;
@@ -183,34 +185,34 @@
             border-left: 4px solid #667eea;
             transition: transform 0.3s ease;
         }
-        
+
         .stat-card:hover {
             transform: translateY(-5px);
         }
-        
+
         .stat-card.success {
             border-left-color: #28a745;
         }
-        
+
         .stat-card.warning {
             border-left-color: #ffc107;
         }
-        
+
         .stat-card.danger {
             border-left-color: #dc3545;
         }
-        
+
         .stat-card.info {
             border-left-color: #17a2b8;
         }
-        
+
         .stat-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 15px;
         }
-        
+
         .stat-icon {
             width: 50px;
             height: 50px;
@@ -221,74 +223,74 @@
             font-size: 1.5rem;
             color: white;
         }
-        
+
         .stat-icon.primary {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
-        
+
         .stat-icon.success {
             background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
         }
-        
+
         .stat-icon.warning {
             background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
         }
-        
+
         .stat-icon.danger {
             background: linear-gradient(135deg, #dc3545 0%, #e83e8c 100%);
         }
-        
+
         .stat-number {
             font-size: 2.5rem;
             font-weight: 700;
             color: #333;
         }
-        
+
         .stat-label {
             font-size: 0.9rem;
             color: #666;
             margin-top: 5px;
         }
-        
+
         .chart-section {
             display: grid;
             grid-template-columns: 2fr 1fr;
             gap: 20px;
             margin-bottom: 30px;
         }
-        
+
         .chart-card {
             background: white;
             padding: 25px;
             border-radius: 15px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
         }
-        
+
         .chart-title {
             font-size: 1.3rem;
             font-weight: 600;
             margin-bottom: 20px;
             color: #333;
         }
-        
+
         .recent-activity {
             background: white;
             padding: 25px;
             border-radius: 15px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
         }
-        
+
         .activity-item {
             display: flex;
             align-items: center;
             padding: 15px 0;
             border-bottom: 1px solid #eee;
         }
-        
+
         .activity-item:last-child {
             border-bottom: none;
         }
-        
+
         .activity-icon {
             width: 40px;
             height: 40px;
@@ -299,131 +301,132 @@
             margin-right: 15px;
             font-size: 1rem;
         }
-        
+
         .activity-icon.success {
             background: rgba(40, 167, 69, 0.1);
             color: #28a745;
         }
-        
+
         .activity-icon.warning {
             background: rgba(255, 193, 7, 0.1);
             color: #ffc107;
         }
-        
+
         .activity-icon.info {
             background: rgba(23, 162, 184, 0.1);
             color: #17a2b8;
         }
-        
+
         .activity-content {
             flex: 1;
         }
-        
+
         .activity-title {
             font-weight: 500;
             color: #333;
             margin-bottom: 3px;
         }
-        
+
         .activity-time {
             font-size: 0.85rem;
             color: #666;
         }
-        
+
         .progress-section {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
         }
-        
+
         .progress-card {
             background: white;
             padding: 25px;
             border-radius: 15px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
         }
-        
+
         .progress-item {
             margin-bottom: 20px;
         }
-        
+
         .progress-item:last-child {
             margin-bottom: 0;
         }
-        
+
         .progress-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 8px;
         }
-        
+
         .progress-label {
             font-weight: 500;
             color: #333;
         }
-        
+
         .progress-percentage {
             font-size: 0.9rem;
             color: #666;
         }
-        
+
         .progress-bar {
             height: 8px;
             background: #e9ecef;
             border-radius: 4px;
             overflow: hidden;
         }
-        
+
         .progress-fill {
             height: 100%;
             border-radius: 4px;
             transition: width 0.3s ease;
         }
-        
+
         .progress-fill.primary {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
-        
+
         .progress-fill.success {
             background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
         }
-        
+
         .progress-fill.warning {
             background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
         }
-        
+
         .progress-fill.danger {
             background: linear-gradient(135deg, #dc3545 0%, #e83e8c 100%);
         }
-        
+
         @media (max-width: 768px) {
             .sidebar {
                 transform: translateX(-100%);
             }
-            
+
             .sidebar.show {
                 transform: translateX(0);
             }
-            
+
             .main-content {
                 margin-left: 0;
             }
-            
+
             .chart-section {
                 grid-template-columns: 1fr;
             }
-            
+
             .stats-grid {
                 grid-template-columns: 1fr;
             }
-            
+
             .dashboard-content {
                 padding: 20px;
             }
         }
     </style>
 </head>
+
 <body>
 
     @include('components.sidebar')
@@ -631,13 +634,13 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <script>
         // Sidebar Toggle
         document.getElementById('sidebarToggle').addEventListener('click', function() {
             const sidebar = document.getElementById('sidebar');
             const mainContent = document.getElementById('mainContent');
-            
+
             sidebar.classList.toggle('collapsed');
             mainContent.classList.toggle('expanded');
         });
@@ -694,4 +697,5 @@
         handleResize(); // Call on page load
     </script>
 </body>
+
 </html>
