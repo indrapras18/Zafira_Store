@@ -35,3 +35,4 @@ Route::post('/barangs', [BarangController::class, 'store'])->name('barangs.store
 // sales
 Route::get('/sales', [SalesController::class, 'index'])->name('sales.index');
 Route::get('/sales/barangs', [SalesController::class, 'getBarangs'])->name('sales.barangs');
+Route::post('/sales/store', [SalesController::class, 'store'])->name('sales.store');

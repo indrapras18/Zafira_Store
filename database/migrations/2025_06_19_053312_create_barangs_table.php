@@ -11,17 +11,20 @@ return new class extends Migration
      *
      * @return void
      */
-public function up()
-{
-    Schema::create('barangs', function (Blueprint $table) {
-        $table->id();
-        $table->string('kode_barang')->unique();
-        $table->string('nama_barang');
-        $table->integer('stok');
-        $table->decimal('harga', 10, 2);
-        $table->timestamps();
-    });
-}
+    public function up()
+    {
+        Schema::create('barangs', function (Blueprint $table) {
+            $table->id();
+            $table->string('kode_barang')->unique();
+            $table->string('nama_barang');
+            $table->integer('stok');
+            $table->decimal('harga', 10, 2);
+            $table->string('kategori')->nullable();
+            $table->text('deskripsi')->nullable();
+            $table->string('barcode_path')->nullable(); // Untuk menyimpan path barcode
+            $table->timestamps();
+        });
+    }
 
     /**
      * Reverse the migrations.

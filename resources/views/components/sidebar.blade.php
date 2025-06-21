@@ -19,7 +19,7 @@
             </a>
         </div>
         <div class="menu-item">
-            <a href="/sales" class="menu-link {{ request()->is('penjualan*') ? 'active' : '' }}">
+            <a href="/sales" class="menu-link {{ request()->is('sales*') ? 'active' : '' }}">
                 <i class="fas fa-chart-bar menu-icon"></i>
                 Penjualan
             </a>
