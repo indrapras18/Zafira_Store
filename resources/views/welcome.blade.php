@@ -182,16 +182,19 @@
         <div class="container mx-auto px-6 relative z-10 flex items-center min-h-screen">
             <!-- Login button di pojok kanan atas -->
             <div class="absolute top-6 right-6 z-30">
-                <button
-                    class="btn-login bg-white/10 border-2 border-yellow-300 text-yellow-300 px-6 py-3 rounded-xl font-bold text-sm glass-morphism inline-flex items-center gap-2 hover:bg-yellow-300 hover:text-blue-700 transition-all duration-300">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1">
-                        </path>
-                    </svg>
-                    Login
-                </button>
+                <a href="/login">
+                    <button
+                        class="btn-login bg-white/10 border-2 border-yellow-300 text-yellow-300 px-6 py-3 rounded-xl font-bold text-sm glass-morphism inline-flex items-center gap-2 hover:bg-yellow-300 hover:text-blue-700 transition-all duration-300">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1">
+                            </path>
+                        </svg>
+                        Login
+                    </button>
+                </a>
             </div>
+
             <div class="flex flex-col lg:flex-row items-center w-full gap-12">
 
                 <div class="lg:w-1/2 text-center lg:text-left">

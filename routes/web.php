@@ -24,8 +24,9 @@ Route::get('/', function () {
 
 // home
 Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
-Route::get('/login', [SesiController::class, 'index'])->name('login');
-Route::post('/login', [SesiController::class, 'login'])->name('login');
+Route::get('/login', [SesiController::class, 'index'])->name('login')->middleware('guest');
+Route::post('/login', [SesiController::class, 'login']);
+Route::post('/logout', [SesiController::class, 'logout'])->name('logout');
 
 // barang
 Route::get('/barangs', [BarangController::class, 'index'])->name('barangs.index');
